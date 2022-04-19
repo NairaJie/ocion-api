@@ -38,6 +38,14 @@ class OcionController extends Controller
             $ocion = new Ocion();
             //$ocion -> id = $data['id'];
             $ocion-> title = $data['title'];
+
+            if ($image = $request->file('image')) {
+                $destinationPath = 'image/';
+                $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+                $image->move($destinationPath, $profileImage);
+                $data['image'] = "$profileImage";
+            }
+
             $ocion-> image = $data['image'];
             $ocion-> name = $data['name'];
             $ocion-> description = $data['description'];
@@ -66,6 +74,13 @@ class OcionController extends Controller
             $ocion = new Ocion();
             //$ocion -> id = $data['id'];
             $ocion-> title = $data['title'];
+            
+            if ($image = $request->file('image')) {
+                $destinationPath = 'image/';
+                $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+                $image->move($destinationPath, $profileImage);
+                $data['image'] = "$profileImage";
+            }
             $ocion-> image = $data['image'];
             $ocion-> name = $data['name'];
             $ocion-> description = $data['description'];
@@ -85,6 +100,23 @@ class OcionController extends Controller
             // $exception->getMessage();
             return response()->json(compact('status', 'th'),401);
         }
+    }
+
+    public function searchOcion(Request $request)
+    {
+        $ocion = Ocion::query();
+    
+        $search = request()->query("search");
+    
+    if(request()->has("search")&& strlen(request()->query("search"))>=1){
+    
+    
+        $Ocion = $ocion->where(
+            "name","like","%".$search."%")->get();
+         }
+    
+        return response()->json(compact('ocion'), 200);
+    
     }
 
     public function deleteOcion($id){

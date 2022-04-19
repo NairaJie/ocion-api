@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OcionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// ocion image crud
+  
 
 Route::get('/', function () {
     return view('welcome');
